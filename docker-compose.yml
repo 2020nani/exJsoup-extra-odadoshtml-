@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  nfviasoft:
+    build: .
+    image: 'nfviasoft'
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+
+  postgres:
+    image: 'postgres:alpine'
+    volumes:
+      - postgres-volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: nfviasoft
+      POSTGRES_HOST: postgres
+
+volumes:
+  postgres-volume:
